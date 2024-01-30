@@ -17,15 +17,11 @@ Bilengua is a translation service leveraging modern web technologies to provide 
   - `Dockerfile`: Docker configuration for the front end.
 
 ### Backend
-- `/backend`: Contains all back-end code, built with Node.js and Express.
-  - `/src`: Main source code directory.
-    - `/controllers`: Controllers for handling API requests.
-    - `/models`: Data models.
-    - `/routes`: API routes.
-    - `server.js`: Entry point for the back-end application.
-  - `/tests`: Tests for the back-end code.
-  - `package.json`: NPM package file.
-  - `Dockerfile`: Docker configuration for the back end.
+- `/lambda_chatgpt_api`: Handles interactions with the ChatGPT API.
+  - `src/handler.ts`: Processes requests, communicates with ChatGPT API, formats responses.
+
+-`/lambda_database_ops`: Manages database operations.
+  - `src/handler.ts`: Handles database interactions, user session management, token refreshes.
 
 ### Database
 - `/database`: Contains database-related scripts.
