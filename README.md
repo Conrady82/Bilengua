@@ -20,7 +20,7 @@ Bilengua is a translation service leveraging modern web technologies to provide 
 - `/lambda_chatgpt_api`: Handles interactions with the ChatGPT API.
   - `src/handler.ts`: Processes requests, communicates with ChatGPT API, formats responses.
 
--`/lambda_database_ops`: Manages database operations.
+- `/lambda_database_ops`: Manages database operations.
   - `src/handler.ts`: Handles database interactions, user session management, token refreshes.
 
 ### Database
