@@ -3,38 +3,30 @@
 ## Overview
 Bilengua is a translation service leveraging modern web technologies to provide seamless language translation experiences.
 
-## System Components
+## Project Structure
 
-### Front End
-- **Technology**: React with TypeScript and JavaScript.
-- **Hosting**: Amazon S3, with optional CloudFront for CDN benefits.
-- **Interaction**: API calls to back end; implements Google OAuth for user authentication.
-- **Token Management**: Handles access tokens in the browser's local storage for authenticated sessions.
-- **Structure**:
+### Frontend
+- `/frontend`: Contains all front-end code, built with React.
   - `/src`: Main source code directory.
     - `/components`: React components.
     - `/pages`: Page components.
     - `/utils`: Utility functions.
   - `/public`: Public assets like images and `index.html`.
+  - `/tests`: Tests for the front-end code.
+  - `package.json`: NPM package file.
+  - `Dockerfile`: Docker configuration for the front end.
 
-### Back End
-- **Technology**: AWS Lambda (Node.js with Express, Axios for development), TypeScript, and JavaScript.
-- **Processing Flow**:
-  - Receives scripts from the front end.
-  - Verifies Google OAuth tokens and manages user sessions.
-  - Retrieves translation data from an Amazon RDS database.
-  - Sends data to the ChatGPT API for translation.
-  - Returns the translated script to the front end.
-- **Structure**:
-  - `lambda_chatgpt_api`: Handles ChatGPT API interactions.
-  - `lambda_database_ops`: Manages database operations.
-- **OAuth Flow**: Verifies Google OAuth access tokens; refreshes tokens as needed.
-- **Database Interaction**: Manages user sessions and refresh tokens with Amazon RDS.
-- **Deployment**: AWS Lambda for scalability and cost-effectiveness.
+### Backend
+- `/lambda_chatgpt_api`: Handles interactions with the ChatGPT API.
+  - `src/handler.ts`: Processes requests, communicates with ChatGPT API, formats responses.
+
+-`/lambda_database_ops`: Manages database operations.
+  - `src/handler.ts`: Handles database interactions, user session management, token refreshes.
 
 ### Database
-- **Technology**: Amazon RDS with PostgreSQL.
-- **Purpose**: Stores OPUS data, user session information, and refresh tokens.
+- `/database`: Contains database-related scripts.
+  - `/migrations`: Database migration scripts.
+  - `/seeds`: Database seed scripts.
 
 ### Root Directory
 - `docker-compose.yml`: Docker Compose configuration.
