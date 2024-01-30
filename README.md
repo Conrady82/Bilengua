@@ -61,6 +61,16 @@ Bilengua is a translation service leveraging modern web technologies to provide 
      ```
    - This command maps your local frontend directory to the container and forwards port 3000, enabling you to access the application at `http://localhost:3000`.
 
+4. **Stop the Container with Volume Mounting**:
+   - To stop the development run the following command:
+     ```bash
+     docker ps
+     ```
+   - This command lists your docker containers that are running, you will see first listed an id number, copy this number and then paste it in for dockerid in the following command:
+   ```bash
+     docker stop dockerid
+     ```
+
 ### Adjusting Polling for File Watching
 
 - The development server is configured to use file watching to automatically reload the application when code changes are detected. In some environments, especially when using Docker on Windows or Mac, you may need to enable polling to ensure file changes are detected.
