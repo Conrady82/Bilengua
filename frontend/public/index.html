@@ -15,6 +15,9 @@
             fetch('http://localhost:9001/2015-03-31/functions/function/invocations', {
                 method: 'POST',
                 headers: {
+                    "Access-Control-Allow-Origin": "*", // Allows requests from any origin
+                    "Access-Control-Allow-Headers": "Content-Type",
+                    "Access-Control-Allow-Methods": "OPTIONS,POST,GET",
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({ message: 'Hello from Frontend' })
