@@ -8,19 +8,31 @@
 <body>
 
     <div id="root"></div>
-    <button id="invokeLambda">Invoke Lambda Function</button>
+    <button id="invokeLambda">Invoke ChatGPT Lambda Function</button>
+    <button id="invokedbLambda">Invoke DB Lambda Function</button>
 
     <script>
         document.getElementById('invokeLambda').addEventListener('click', function() {
-            fetch('http://localhost:9001/2015-03-31/functions/function/invocations', {
+            fetch('/api/chatgpt', {
                 method: 'POST',
                 headers: {
-                    "Access-Control-Allow-Origin": "*", // Allows requests from any origin
-                    "Access-Control-Allow-Headers": "Content-Type",
-                    "Access-Control-Allow-Methods": "OPTIONS,POST,GET",
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ message: 'Hello from Frontend' })
+                body: JSON.stringify({})
+            })
+            .then(response => response.json())
+            .then(data => console.log(data))
+            .catch(error => console.error('Error:', error));
+        });
+    </script>
+     <script>
+        document.getElementById('invokedbLambda').addEventListener('click', function() {
+            fetch('/api/database', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({})
             })
             .then(response => response.json())
             .then(data => console.log(data))
