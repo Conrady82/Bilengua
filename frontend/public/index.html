@@ -6,6 +6,23 @@
     <title>Bilengua</title>
 </head>
 <body>
+
     <div id="root"></div>
+    <button id="invokeLambda">Invoke Lambda Function</button>
+
+    <script>
+        document.getElementById('invokeLambda').addEventListener('click', function() {
+            fetch('http://localhost:9001/2015-03-31/functions/function/invocations', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ message: 'Hello from Frontend' })
+            })
+            .then(response => response.json())
+            .then(data => console.log(data))
+            .catch(error => console.error('Error:', error));
+        });
+    </script>
 </body>
 </html>
