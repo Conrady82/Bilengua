@@ -2,3 +2,4 @@ backend/lambda_chatgpt_api/node_modules/
 backend/lambda_database_ops/node_modules/
 frontend/node_modules/
 .DS_Store
+.env
