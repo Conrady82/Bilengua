@@ -1,6 +1,14 @@
-import React, { useState, ChangeEvent } from 'react';
+import React, { useState, ChangeEvent, FC } from 'react';
 
-function App() {
+interface ApiResponse {
+  body: string;
+}
+
+interface ResponseBody {
+  message: string;
+}
+
+const App: FC = () => {
   const [inputScript, setInputScript] = useState<string>('');
   const [outputResponse, setOutputResponse] = useState<string>('');
 
@@ -18,9 +26,21 @@ function App() {
         body: JSON.stringify({ script: inputScript })
       });
       if (!response.ok) throw new Error('Network response was not ok');
-      const data = await response.json();
-      console.log(data)
-      setOutputResponse(data.message); // Assuming the response contains a "message" field
+      
+      const data: ApiResponse = await response.json();
+      console.log(data);
+
+      // Assuming 'data.body' is a JSON string that needs to be parsed
+      let responseBody: ResponseBody;
+      try {
+        responseBody = JSON.parse(data.body);
+      } catch (parseError) {
+        console.error('Error parsing response body:', parseError);
+        setOutputResponse('Error parsing response');
+        return; // Exit the function early if parsing fails
+      }
+
+      setOutputResponse(responseBody.message);
     } catch (error) {
       console.error('Error:', error);
       setOutputResponse('Failed to fetch response');
@@ -40,6 +60,6 @@ function App() {
       </div>
     </div>
   );
-}
+};
 
 export default App;
