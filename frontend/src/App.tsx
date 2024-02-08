@@ -1,9 +1,10 @@
 import React from 'react';
+import Header from './components/Header'; // Make sure the path is correct based on your project structure
 
 function App() {
   return (
     <div>
-      <h1>Bilengua</h1>
+      <Header />
     </div>
   );
 }

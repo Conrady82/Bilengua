@@ -18,6 +18,17 @@ module.exports = {
         test: /\.css$/,
         use: ["style-loader", "css-loader"],
       },
+      {
+        test: /\.(png|svg|jpg|jpeg|gif)$/i,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: 'assets/[name].[hash].[ext]', // Configure the file naming convention
+            },
+          },
+        ],
+      },
     ],
   },
   resolve: {
