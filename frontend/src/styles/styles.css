@@ -1,10 +1,151 @@
+/* Apply a reset to margin and padding for all elements */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    height: 100%;
+    margin: 0;
+    /* Remove default margin */
+}
+
+#root {
+    display: flex;
+    flex-direction: column;
+    max-width: 200vh;
+    min-height: 100vh;
+    /* Use the viewport height to fill the screen */
+    background-color: #062634;
+}
+
+.appPage {
+    max-width: 100%;
+    background-color: #062634;
+    min-height: fit-content;
+    align-self: center;
+    /* box-shadow: 4px 4px 4px 1px rgb(0 0 0 / 30%); */
+}
+
 .header {
     display: flex;
-    align-items: center;
-    justify-content: center;
+    align-content: flex-start;
+    min-width: 150vh;
+    max-height: 20%;
+    background-color: #FAF2E7;
 }
 
 .header-logo {
-    margin-right: 10px;
-    margin-left: 10px;
+    margin-left: 5%;
+    max-width: 8%;
+    height: auto;
+}
+
+h1 {
+    display: flex;
+    margin-top: 4.25%;
+    color: #062634;
+}
+
+
+/*    -------    new styles attempt  ------   ///////// */
+
+
+
+/* Body container styling */
+.bodyContainer {
+    flex: 1;
+    /* Takes up the remaining space between header and footer */
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    /* Stack children horizontally */
+    justify-content: center;
+    /* Center the content horizontally */
+    align-items: center;
+    /* Center the content vertically */
+    padding: 20px;
+}
+
+/* Style for translation input and output containers */
+.translationContainer {
+    display: flex;
+    flex-direction: column;
+    /* Stack input and output vertically */
+    width: 100%;
+    /* Full width of its container */
+    max-width: 600px;
+    /* Maximum width of the translation container */
+    margin: 0 auto;
+    /* Centering the container */
+    gap: 10px;
+    /* Space between elements */
+}
+
+.translationInput {
+    display: flex;
+    align-items: center;
+    height: max-content;
+    justify-content: space-between;
+}
+
+.translationOutput {
+    display: flex;
+    align-items: center;
+    height: max-content;
+    justify-content: space-between;
+}
+
+/* Style adjustments for the textarea to make it visually appealing */
+.translationInput textarea {
+    height: 30vh;
+    width: 50vh;
+    flex-grow: 1;
+    /* Adds some space between the textarea and the button */
+}
+
+.translationOutput textarea {
+    height: 30vh;
+    width: 50vh;
+    flex-grow: 1;
+}
+
+/* Textarea and button shared styles */
+textarea,
+button {
+    padding: 10px 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+    margin: 10px;
+}
+
+/* Button specific styles */
+button {
+    cursor: pointer;
+    background-color: #FAF2E7;
+    color: #062634;
+    border: none;
+}
+
+button:active {
+    background: #e5e5e5;
+    -webkit-box-shadow: inset 0px 0px 5px #c1c1c1;
+    -moz-box-shadow: inset 0px 0px 5px #c1c1c1;
+    box-shadow: inset 0px 0px 5px #062634;
+    outline: none;
+}
+
+/* Responsive design: Adjust layout on smaller screens */
+@media (max-width: 768px) {
+    .bodyContainer {
+        padding: 10px;
+    }
+
+    .translationContainer {
+        width: fit-content;
+    }
 }

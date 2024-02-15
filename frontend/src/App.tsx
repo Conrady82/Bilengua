@@ -1,10 +1,12 @@
 import React from 'react';
-import Header from './components/Header'; // Make sure the path is correct based on your project structure
+import Header from './components/Header';
+import Body from './components/Body';
 
 function App() {
   return (
-    <div>
+    <div className="appPage">
       <Header />
+      <Body />
     </div>
   );
 }
