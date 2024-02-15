@@ -6,6 +6,38 @@
     <title>Bilengua</title>
 </head>
 <body>
+
     <div id="root"></div>
+    <button id="invokeLambda">Invoke ChatGPT Lambda Function</button>
+    <button id="invokedbLambda">Invoke DB Lambda Function</button>
+
+    <script>
+        document.getElementById('invokeLambda').addEventListener('click', function() {
+            fetch('/api/chatgpt', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({})
+            })
+            .then(response => response.json())
+            .then(data => console.log(data))
+            .catch(error => console.error('Error:', error));
+        });
+    </script>
+     <script>
+        document.getElementById('invokedbLambda').addEventListener('click', function() {
+            fetch('/api/database', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({})
+            })
+            .then(response => response.json())
+            .then(data => console.log(data))
+            .catch(error => console.error('Error:', error));
+        });
+    </script>
 </body>
 </html>

@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    volumes:
+      - ./frontend:/app
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+    command: npm start
+
+  lambda_chatgpt_api:
+    build:
+      context: ./backend/lambda_chatgpt_api
+      dockerfile: Dockerfile
+    volumes:
+      - ~/.aws-lambda-rie:/aws-lambda
+    ports:
+      - "9001:8080"
+    entrypoint: /aws-lambda/aws-lambda-rie
+    command: /usr/local/bin/npx aws-lambda-ric handler.handler
+
+  lambda_database_ops:
+    build:
+      context: ./backend/lambda_database_ops
+      dockerfile: Dockerfile
+    volumes:
+      - ~/.aws-lambda-rie:/aws-lambda
+    ports:
+      - "9002:8080"
+    entrypoint: /aws-lambda/aws-lambda-rie
+    command: /usr/local/bin/npx aws-lambda-ric handler.handler

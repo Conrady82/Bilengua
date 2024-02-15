@@ -82,6 +82,133 @@ Bilengua is a translation service leveraging modern web technologies to provide 
     poll: 2000, // Adjust polling interval (in milliseconds)
   },
 
+## Back-End Development Environment Setup
+# AWS Lambda Local Development Setup Guide
+
+This guide outlines the steps for setting up and testing the `lambda_chatgpt_api` and `lambda_database_ops` Lambda functions locally.
+
+## Prerequisites
+
+- Docker installed on your machine.
+- Node.js and npm installed on your machine.
+
+## Setup Instructions
+
+### 1. Install Node Dependencies
+
+You need to run `npm install` in both Lambda function directories.
+
+- npm install in chatGPT Lambda folder, and install Lambda RIE, navigate back to home directory then paste
+  ```bash
+  cd backend/lambda_chatgpt_api
+  npm install
+  mkdir -p ~/.aws-lambda-rie && \
+  curl -Lo ~/.aws-lambda-rie/aws-lambda-rie https://github.com/aws/aws-lambda-runtime-interface-emulator/releases/latest/download/aws-lambda-rie && \
+  chmod +x ~/.aws-lambda-rie/aws-lambda-rie
+
+- Same actions for Database Lambda folder, navigate back to home directory
+  ```bash
+  cd path/to/backend/lambda_database_ops
+  npm install
+  mkdir -p ~/.aws-lambda-rie && \
+  curl -Lo ~/.aws-lambda-rie/aws-lambda-rie https://github.com/aws/aws-lambda-runtime-interface-emulator/releases/latest/download/aws-lambda-rie && \
+  chmod +x ~/.aws-lambda-rie/aws-lambda-rie
+
+### 2. Build Docker Images
+
+- Navigate to the lambda_chatgpt_api/ folder and then run this command:
+  ```bash
+  docker build -t lambda_chatgpt_api .
+
+
+- Navigate to the lambda_database_ops/ folder and then run this command:
+  ```bash
+  docker build -t lambda_database_ops .
+
+### 3. Run Docker Containers
+
+- Navigate to the lambda_chatgpt_api/ folder and then run this command:
+  ```bash
+  docker run -d -v ~/.aws-lambda-rie:/aws-lambda -p 9001:8080 \
+    --entrypoint /aws-lambda/aws-lambda-rie \
+    lambda_chatgpt_api:latest \
+    /usr/local/bin/npx aws-lambda-ric handler.handler
+
+
+
+- Navigate to the lambda_database_ops/ folder and then run this command:
+  ```bash
+  docker run -d -v ~/.aws-lambda-rie:/aws-lambda -p 9002:8080 \
+    --entrypoint /aws-lambda/aws-lambda-rie \
+    lambda_database_ops:latest \
+    /usr/local/bin/npx aws-lambda-ric handler.handler
+
+### 4. Test Lambda Functions
+
+- Test lambda_chatgpt_api Function:
+  ```bash
+  curl -XPOST "http://localhost:9001/2015-03-31/functions/function/invocations" -d '{}'
+
+
+- Test lambda_database_ops Function:
+  ```bash
+  curl -XPOST "http://localhost:9002/2015-03-31/functions/function/invocations" -d '{}'
+
+# Development Environment Setup Guide
+
+This guide will walk you through setting up the development environment for our project using Docker Compose.
+
+## Prerequisites
+
+- Ensure you have Docker, Node.js, and npm installed on your machine.
+
+## Initial Setup
+
+### 1. Install Node Dependencies
+
+You need to run `npm install` in the frontend and both Lambda function directories.
+
+- **Frontend**:
+  ```bash
+  cd /frontend
+  npm install
+
+- **Backend**:
+- npm install in chatGPT Lambda folder, and install Lambda RIE, navigate back to home directory then paste
+  ```bash
+  cd backend/lambda_chatgpt_api
+  npm install
+  mkdir -p ~/.aws-lambda-rie && \
+  curl -Lo ~/.aws-lambda-rie/aws-lambda-rie https://github.com/aws/aws-lambda-runtime-interface-emulator/releases/latest/download/aws-lambda-rie && \
+  chmod +x ~/.aws-lambda-rie/aws-lambda-rie
+
+- Same actions for Database Lambda folder, navigate back to home directory
+  ```bash
+  cd path/to/backend/lambda_database_ops
+  npm install
+  mkdir -p ~/.aws-lambda-rie && \
+  curl -Lo ~/.aws-lambda-rie/aws-lambda-rie https://github.com/aws/aws-lambda-runtime-interface-emulator/releases/latest/download/aws-lambda-rie && \
+  chmod +x ~/.aws-lambda-rie/aws-lambda-rie
+
+### 2. Docker compose setup
+
+- **Build and Run Docker Images**
+  Before running services for the first time, bnuild the Docker images. Navigate to the home directory and then paste:
+  ```bash
+  docker-compose up --build
+
+- **Future runs**
+  In the future if there are no changes to the Dockerfiles or package dependencies (code changes are fine) you can directly start the services without rebuilding the images.
+  Navigate to the home directory and paste in the command:
+  ```bash
+  docker-compose up
+
+### 3. Docker compose teardown
+
+- **Stop services**
+  When your done, open up a new terminal and paste in the command:
+  ```bash
+  docker-compose down
 
 ## Contribution Guidelines
 (Outline how team members can contribute to the project, including coding standards, branch naming conventions, etc.)

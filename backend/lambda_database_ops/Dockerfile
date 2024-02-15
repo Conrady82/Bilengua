@@ -1,23 +1,44 @@
-# Use the AWS Lambda Node.js base image
-FROM public.ecr.aws/lambda/nodejs:latest
+# Define custom function directory
+ARG FUNCTION_DIR="/lambda_database_ops"
 
-# Copy function code and package.json to the container
-COPY lambda_database_ops/package*.json lambda_database_ops/
+# Stage 1: Build stage using Node.js 18
+FROM node:18-buster as build-image
+
+# Include global arg in this stage of the build
+ARG FUNCTION_DIR
+
+# Install aws-lambda-cpp build dependencies
+RUN apt-get update && \
+    apt-get install -y \
+    g++ \
+    make \
+    cmake \
+    unzip \
+    libcurl4-openssl-dev
+
+# Copy function code
+RUN mkdir -p ${FUNCTION_DIR}
+COPY ./* ${FUNCTION_DIR}
+
+WORKDIR ${FUNCTION_DIR}
 
 # Install dependencies
-RUN npm install --prefix lambda_database_ops
+RUN npm install
 
-# Copy the rest of the function code
-COPY . lambda_database_ops/
+# Stage 2: Create a slim image for runtime
+FROM node:18-buster-slim
 
-# Specify the name of your Lambda handler file (e.g., handler.ts)
-ENV AWS_LAMBDA_FUNCTION_HANDLER=handler.ts
+# Set environment variable for npm cache
+ENV NPM_CONFIG_CACHE=/tmp/.npm
 
-# Specify the name of your Lambda function (e.g., lambda_chatgpt_api)
-ENV AWS_LAMBDA_FUNCTION_NAME=lambda_database_ops
+# Include global arg in this stage of the build
+ARG FUNCTION_DIR
 
-# Expose port 9000 (default for Lambda Runtime API)
-EXPOSE 9000
+# Set working directory to function root directory
+WORKDIR ${FUNCTION_DIR}
 
-# Set the CMD to your handler
-CMD ["npm", "run", "start-runtime"]
+# Copy in the built dependencies from the build stage
+COPY --from=build-image ${FUNCTION_DIR} ${FUNCTION_DIR}
+
+ENTRYPOINT ["/usr/local/bin/npx", "aws-lambda-ric"]
+CMD ["handler.handler"]

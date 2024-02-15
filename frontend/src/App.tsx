@@ -1,9 +1,12 @@
 import React from 'react';
+import Header from './components/Header';
+import Body from './components/Body';
 
 function App() {
   return (
-    <div>
-      <h1>Bilengua</h1>
+    <div className="appPage">
+      <Header />
+      <Body />
     </div>
   );
 }

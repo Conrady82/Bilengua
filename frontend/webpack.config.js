@@ -18,6 +18,17 @@ module.exports = {
         test: /\.css$/,
         use: ["style-loader", "css-loader"],
       },
+      {
+        test: /\.(png|svg|jpg|jpeg|gif)$/i,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: 'assets/[name].[hash].[ext]', // Configure the file naming convention
+            },
+          },
+        ],
+      },
     ],
   },
   resolve: {
@@ -31,6 +42,22 @@ module.exports = {
   devServer: {
     static: {
       directory: path.join(__dirname, "public"),
+    },
+    proxy: {
+      "/api/chatgpt": {
+        target:
+          "http://lambda_chatgpt_api:8080/2015-03-31/functions/function/invocations",
+        pathRewrite: { "^/api/chatgpt": "" },
+        changeOrigin: true,
+        logLevel: "debug",
+      },
+      "/api/database": {
+        target:
+          "http://lambda_database_ops:8080/2015-03-31/functions/function/invocations",
+        pathRewrite: { "^/api/database": "" },
+        changeOrigin: true,
+        logLevel: "debug",
+      },
     },
     host: "0.0.0.0", // Listen on all network interfaces
     port: 3000, // Port 3000
