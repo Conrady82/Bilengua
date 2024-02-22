@@ -23,7 +23,6 @@ body {
 }
 
 .appPage {
-    max-width: 100%;
     background-color: #062634;
     min-height: fit-content;
     align-self: center;
@@ -33,27 +32,22 @@ body {
 .header {
     display: flex;
     align-content: flex-start;
-    min-width: 150vh;
-    max-height: 20%;
+    min-width: 100vw;
     background-color: #FAF2E7;
+    height: 128px;
 }
 
 .header-logo {
     margin-left: 5%;
-    max-width: 8%;
-    height: auto;
+    width: 128px;
+    height: 128px;
 }
 
 h1 {
     display: flex;
-    margin-top: 4.25%;
+    margin-top: 75px;
     color: #062634;
 }
-
-
-/*    -------    new styles attempt  ------   ///////// */
-
-
 
 /* Body container styling */
 .bodyContainer {
